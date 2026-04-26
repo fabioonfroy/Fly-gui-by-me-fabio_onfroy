@@ -1,0 +1,177 @@
+local lp = game.Players.LocalPlayer
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local SpeedLabel = Instance.new("TextLabel")
+local btnPlus = Instance.new("TextButton")
+local btnMinus = Instance.new("TextButton")
+local btnFly = Instance.new("TextButton")
+local btnUp = Instance.new("TextButton") 
+local btnDown = Instance.new("TextButton") 
+
+ScreenGui.Name = "FlyFabioBlackV4"
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+MainFrame.Name = "MainFrame"
+MainFrame.Parent = ScreenGui
+MainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+MainFrame.BorderSizePixel = 1
+MainFrame.BorderColor3 = Color3.fromRGB(255, 255, 255)
+-- POSIÇÃO AJUSTADA PARA O CANTO ESQUERDO (Conforme a foto)
+MainFrame.Position = UDim2.new(0.05, 0, 0.4, 0) 
+MainFrame.Size = UDim2.new(0, 200, 0, 80)
+MainFrame.Active = true
+MainFrame.Draggable = true 
+
+Title.Parent = MainFrame
+Title.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Title.BorderSizePixel = 1
+Title.BorderColor3 = Color3.fromRGB(255, 255, 255)
+Title.Position = UDim2.new(0.4, 0, 0, 0)
+Title.Size = UDim2.new(0.6, 0, 0.5, 0)
+Title.Font = Enum.Font.SourceSansBold
+Title.Text = "gui by me fabio_onfroy"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.TextScaled = true
+
+btnPlus.Parent = MainFrame
+btnPlus.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+btnPlus.BorderSizePixel = 1
+btnPlus.BorderColor3 = Color3.fromRGB(255, 255, 255)
+btnPlus.Position = UDim2.new(0.25, 0, 0, 0)
+btnPlus.Size = UDim2.new(0.15, 0, 0.5, 0)
+btnPlus.Text = "+"
+btnPlus.TextColor3 = Color3.fromRGB(255, 255, 255)
+btnPlus.TextSize = 25
+
+btnMinus.Parent = MainFrame
+btnMinus.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+btnMinus.BorderSizePixel = 1
+btnMinus.BorderColor3 = Color3.fromRGB(255, 255, 255)
+btnMinus.Position = UDim2.new(0.25, 0, 0.5, 0)
+btnMinus.Size = UDim2.new(0.15, 0, 0.5, 0)
+btnMinus.Text = "-"
+btnMinus.TextColor3 = Color3.fromRGB(255, 255, 255)
+btnMinus.TextSize = 25
+
+SpeedLabel.Parent = MainFrame
+SpeedLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+SpeedLabel.BorderSizePixel = 1
+SpeedLabel.BorderColor3 = Color3.fromRGB(255, 255, 255)
+SpeedLabel.Position = UDim2.new(0.4, 0, 0.5, 0)
+SpeedLabel.Size = UDim2.new(0.25, 0, 0.5, 0)
+SpeedLabel.Font = Enum.Font.SourceSansBold
+SpeedLabel.Text = "1"
+SpeedLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+SpeedLabel.TextSize = 25
+
+btnFly.Parent = MainFrame
+btnFly.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+btnFly.BorderSizePixel = 1
+btnFly.BorderColor3 = Color3.fromRGB(255, 255, 255)
+btnFly.Position = UDim2.new(0.65, 0, 0.5, 0)
+btnFly.Size = UDim2.new(0.35, 0, 0.5, 0)
+btnFly.Text = "voar"
+btnFly.TextColor3 = Color3.fromRGB(255, 255, 255)
+btnFly.TextSize = 18
+
+btnUp.Parent = MainFrame
+btnUp.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+btnUp.BorderSizePixel = 1
+btnUp.BorderColor3 = Color3.fromRGB(255, 255, 255)
+btnUp.Size = UDim2.new(0.25, 0, 0.5, 0)
+btnUp.Text = "PARA CIMA"
+btnUp.TextColor3 = Color3.fromRGB(255, 255, 255)
+btnUp.TextScaled = true
+
+btnDown.Parent = MainFrame
+btnDown.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+btnDown.BorderSizePixel = 1
+btnDown.BorderColor3 = Color3.fromRGB(255, 255, 255)
+btnDown.Position = UDim2.new(0, 0, 0.5, 0)
+btnDown.Size = UDim2.new(0.25, 0, 0.5, 0)
+btnDown.Text = "BAIXAR"
+btnDown.TextColor3 = Color3.fromRGB(255, 255, 255)
+btnDown.TextScaled = true
+
+local Flying = false
+local FlySpeed = 1
+local Multiplier = 70
+
+-- Ajuste fino de altura
+btnUp.MouseButton1Click:Connect(function()
+    local char = lp.Character
+    if char and char:FindFirstChild("HumanoidRootPart") then
+        char.HumanoidRootPart.CFrame = char.HumanoidRootPart.CFrame * CFrame.new(0, 0.8, 0)
+    end
+end)
+
+btnDown.MouseButton1Click:Connect(function()
+    local char = lp.Character
+    if char and char:FindFirstChild("HumanoidRootPart") then
+        char.HumanoidRootPart.CFrame = char.HumanoidRootPart.CFrame * CFrame.new(0, -0.8, 0)
+    end
+end)
+
+btnPlus.MouseButton1Click:Connect(function()
+    FlySpeed = FlySpeed + 1
+    SpeedLabel.Text = tostring(FlySpeed)
+end)
+
+btnMinus.MouseButton1Click:Connect(function()
+    if FlySpeed > 1 then
+        FlySpeed = FlySpeed - 1
+        SpeedLabel.Text = tostring(FlySpeed)
+    end
+end)
+
+btnFly.MouseButton1Click:Connect(function()
+    Flying = not Flying
+    local char = lp.Character
+    if not char then return end
+    local hrp = char:FindFirstChild("HumanoidRootPart")
+    local hum = char:FindFirstChild("Humanoid")
+    
+    if Flying then
+        btnFly.TextColor3 = Color3.fromRGB(0, 255, 0)
+        local bv = Instance.new("BodyVelocity", hrp)
+        bv.Name = "FlyVel"
+        bv.MaxForce = Vector3.new(math.huge, math.huge, math.huge)
+        
+        local bg = Instance.new("BodyGyro", hrp)
+        bg.Name = "FlyGyro"
+        bg.MaxTorque = Vector3.new(math.huge, math.huge, math.huge)
+        bg.P = 50000 
+        
+        hum.PlatformStand = true
+
+        task.spawn(function()
+            while Flying do
+                local cam = workspace.CurrentCamera
+                local moveDir = hum.MoveDirection
+                bg.CFrame = cam.CFrame
+                
+                if moveDir.Magnitude > 0 then
+                    local look = cam.CFrame.LookVector
+                    local right = cam.CFrame.RightVector
+                    local forwardVec = Vector3.new(look.X, look.Y, look.Z)
+                    local rightVec = Vector3.new(right.X, 0, right.Z).Unit
+                    local horizontalDir = moveDir:Dot(Vector3.new(right.X, 0, right.Z).Unit)
+                    local forwardDir = moveDir:Dot(Vector3.new(look.X, 0, look.Z).Unit)
+                    local finalVec = (forwardVec * forwardDir) + (rightVec * horizontalDir)
+                    bv.Velocity = finalVec.Unit * (FlySpeed * Multiplier)
+                else
+                    bv.Velocity = Vector3.new(0, 0.1, 0)
+                end
+                task.wait()
+            end
+            if hrp:FindFirstChild("FlyVel") then hrp.FlyVel:Destroy() end
+            if hrp:FindFirstChild("FlyGyro") then hrp.FlyGyro:Destroy() end
+            hum.PlatformStand = false
+            btnFly.TextColor3 = Color3.fromRGB(255, 255, 255)
+        end)
+    else
+        btnFly.TextColor3 = Color3.fromRGB(255, 255, 255)
+    end
+end)
